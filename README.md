@@ -10,7 +10,7 @@ Classic make ; make install. make uninstall to remove.
 
 Usage is simple, dsum \<Optional hashing method, defaults to MD5\> filename
 
-Licensed under GPLv3 so feel free to fork. (Maybe you can make it not garbage. *wink*)
+Licensed under Apache 2.0 so feel free to fork. (Maybe you can make it not garbage. *wink*)
 
 TODO
 ====
