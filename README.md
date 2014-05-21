@@ -15,7 +15,7 @@ Licensed under Apache 2.0 so feel free to fork. (Maybe you can make it not garba
 TODO
 ====
 
-Add the file name parser, currently planned: Basic .iso and the like defaulting to MD5 and videos with CRC data defauling to CRC32 with an auto "Everything checks out" alert.
+Add the file name parser, currently planned: Videos with CRC data defauling to CRC32 with an auto "Everything checks out" alert.
 
 Add more hashing methods.
 
