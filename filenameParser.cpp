@@ -14,12 +14,13 @@
 	limitations under the License.
 */
 
-#ifndef DSUMHASHESTOSTRING_HPP
-#define DSUMHASHESTOSTRING_HPP
+#include "filenameParser.hpp"
 
-#include <iostream>
-#include <sstream>
-
-#endif
-
-std::string hashToString(unsigned long);
+bool checkExtension (std::string const &filename, std::string const &extension)
+{
+    if (filename.length() >= extension.length()) {
+        return (0 == filename.compare (filename.length() - extension.length(), extension.length(), extension));
+    } else {
+        return false;
+    }
+}

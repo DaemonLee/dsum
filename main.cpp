@@ -16,9 +16,8 @@
 
 #include <iostream>
 #include <string>
-#include "dsumCalculateHashes.hpp"
-#include "dsumHashesToString.hpp"
-#include "dsumFilenameParser.hpp"
+#include "calculateHashes.hpp"
+#include "filenameParser.hpp"
 
 
 int main(int argc,char *argv[]) {
@@ -44,20 +43,23 @@ int main(int argc,char *argv[]) {
 			break;
 		} else if(checkExtension(filenameCAP, std::string(".ISO"))) {
 			//Default file extensions for MD5
-			std::cout << calculateMD5ToString(argv[1]) << "  " << argv[1] << std::endl;
+			std::cout << calculateMD5(argv[1]) << "  " << argv[1] << std::endl;
 			break;
 		} else {
 			//Run default method if all checks fail
-			std::cout << calculateMD5ToString(argv[1]) << "  " << argv[1] << std::endl;
+			std::cout << calculateMD5(argv[1]) << "  " << argv[1] << std::endl;
 		}
 		break;
 	case 3:
 		if(selectedAlgorithm == "MD5") {
-			std::cout << calculateMD5ToString(argv[2]) << "  " << argv[2] << std::endl;
+			std::cout << calculateMD5(argv[2]) << "  " << argv[2] << std::endl;
 			break;
 		} else if(selectedAlgorithm == "CRC32") {
-			std::cout << hashToString(calculateCRC32(argv[2])) << "  " << argv[2] << std::endl;
+			std::cout << calculateCRC32(argv[2]) << "  " << argv[2] << std::endl;
 			break;
+		} else if(selectedAlgorithm == "SHA1") {
+			std::cout << calculateSHA1(argv[2]) << "  " << argv[2] << std::endl;
+			break; 
 		} else {
 			std::cout << "dsum doesn't have support for that hashing method yet!" << std::endl;
 		}

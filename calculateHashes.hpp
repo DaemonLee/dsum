@@ -14,13 +14,25 @@
 	limitations under the License.
 */
 
-#ifndef DSUMFILENAME_HPP
-#define DSUMFILENAME_HPP
+#ifndef CALCULATEHASHES_HPP
+#define CALCULATEHASHES_HPP
 
 #include <iostream>
-#include <algorithm>
-#include <string>
+#include <sstream>
+#include <iomanip>
+#include <openssl/md5.h>
+#include <openssl/sha.h>
+#include <zlib.h>
+
 
 #endif
 
-bool checkExtension (std::string const &filename, std::string const &extension);
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 65536
+#endif
+
+std::string calculateMD5(char *filename);
+
+std::string calculateSHA1(char *filename);
+
+std::string calculateCRC32(char *filename);

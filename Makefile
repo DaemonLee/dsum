@@ -1,5 +1,5 @@
 #The source files we need.
-SRCS = dsumHashesToString.cpp dsumCalculateHashes.cpp dsumFilenameParser.cpp main.cpp
+SRCS = calculateHashes.cpp filenameParser.cpp main.cpp
 
 #Our C++ compiler, I use clang. Feel feel to change it.
 CXX = clang++
@@ -21,7 +21,7 @@ all: $(SRCS)
 build: $(SRCS)
 	$(CXX) $(SRCS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(NAME)
 
-# I (DaemonLee) don't normally test with GCC but in theory it should work.
+# I (DaemonLee) don't normally test or build dsum with GCC but in theory it should work.
 gcc: $(SRCS)
 	echo "WARNING: UNTESTED COMPILER! USE WITH CARE!"
 	$(GCC) $(SRCS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(NAME)

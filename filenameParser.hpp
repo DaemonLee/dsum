@@ -14,14 +14,13 @@
 	limitations under the License.
 */
 
-#include "dsumHashesToString.hpp"
+#ifndef FILENAME_HPP
+#define FILENAME_HPP
 
-std::string hashToString(unsigned long rawHash)
-{
-	std::stringstream ss;
-	std::string newHash;
+#include <iostream>
+#include <algorithm>
+#include <string>
 
-	ss << std::uppercase << std::hex << rawHash;
-	ss >> newHash;
-	return newHash;
-}
+#endif
+
+bool checkExtension (std::string const &filename, std::string const &extension);
