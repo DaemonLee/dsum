@@ -14,7 +14,7 @@
 	limitations under the License.
 */
 
-#include "dsumHashesToString.h"
+#include "dsumHashesToString.hpp"
 
 std::string hashToString(unsigned long rawHash)
 {

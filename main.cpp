@@ -17,8 +17,8 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include "dsumCalculateHashes.h"
-#include "dsumHashesToString.h"
+#include "dsumCalculateHashes.hpp"
+#include "dsumHashesToString.hpp"
 
 
 int main(int argc,char *argv[]) {
