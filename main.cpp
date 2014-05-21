@@ -15,20 +15,30 @@
 */
 
 #include <iostream>
+#include <algorithm>
+#include <string>
 #include "dsumCalculateHashes.h"
 #include "dsumHashesToString.h"
 
+
 int main(int argc,char *argv[]) {
+
+	std::string selectedMethod;
 	
+	if(argc >= 2) {
+		selectedMethod = std::string(argv[1]);
+		std::transform(selectedMethod.begin(), selectedMethod.end(), selectedMethod.begin(), ::toupper);
+	}
+
 	switch(argc) {
 	case 2:
 		std::cout << calculateMD5ToString(argv[1]) << "  " << argv[1] << std::endl;
 		break;
 	case 3:
-		if(std::string(argv[1]) == "md5") {
+		if(selectedMethod == "MD5") {
 			std::cout << calculateMD5ToString(argv[2]) << "  " << argv[2] << std::endl;
 			break;
-		} else if(std::string(argv[1]) == "crc32") {
+		} else if(std::string(argv[1]) == "CRC32" || "CRC") {
 			std::cout << hashToString(calculateCRC32(argv[2])) << "  " << argv[2] << std::endl;
 			break;
 		} else {
