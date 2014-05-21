@@ -15,30 +15,47 @@
 */
 
 #include <iostream>
-#include <algorithm>
 #include <string>
 #include "dsumCalculateHashes.hpp"
 #include "dsumHashesToString.hpp"
+#include "dsumFilenameParser.hpp"
 
 
 int main(int argc,char *argv[]) {
 
-	std::string selectedMethod;
+	std::string selectedAlgorithm;
+	std::string filename;
+	std::string filenameCAP;
 	
-	if(argc >= 2) {
-		selectedMethod = std::string(argv[1]);
-		std::transform(selectedMethod.begin(), selectedMethod.end(), selectedMethod.begin(), ::toupper);
+	if(argc >= 3) {
+		selectedAlgorithm = std::string(argv[1]);
+		std::transform(selectedAlgorithm.begin(), selectedAlgorithm.end(), selectedAlgorithm.begin(), ::toupper);
+		std::transform(filenameCAP.begin(), filenameCAP.end(), filenameCAP.begin(), ::toupper);
+
+		filename = std::string(argv[2]);
+	} else if(argc == 2) {
+		std::transform(filenameCAP.begin(), filenameCAP.end(), filenameCAP.begin(), ::toupper);
 	}
 
 	switch(argc) {
 	case 2:
-		std::cout << calculateMD5ToString(argv[1]) << "  " << argv[1] << std::endl;
+		if(false) {
+			//CRC32 filename check and defaults for CRC32
+			break;
+		} else if(checkExtension(filenameCAP, std::string(".ISO"))) {
+			//Default file extensions for MD5
+			std::cout << calculateMD5ToString(argv[1]) << "  " << argv[1] << std::endl;
+			break;
+		} else {
+			//Run default method if all checks fail
+			std::cout << calculateMD5ToString(argv[1]) << "  " << argv[1] << std::endl;
+		}
 		break;
 	case 3:
-		if(selectedMethod == "MD5") {
+		if(selectedAlgorithm == "MD5") {
 			std::cout << calculateMD5ToString(argv[2]) << "  " << argv[2] << std::endl;
 			break;
-		} else if(std::string(argv[1]) == "CRC32" || "CRC") {
+		} else if(selectedAlgorithm == "CRC32") {
 			std::cout << hashToString(calculateCRC32(argv[2])) << "  " << argv[2] << std::endl;
 			break;
 		} else {
