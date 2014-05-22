@@ -20,8 +20,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <openssl/md5.h>
-#include <openssl/sha.h>
+#include <openssl/evp.h>
 #include <zlib.h>
 
 
@@ -31,8 +30,6 @@
 #define BUFFER_SIZE 65536
 #endif
 
-std::string calculateMD5(char *filename);
-
-std::string calculateSHA1(char *filename);
+std::string calculateHash(char *filename, char *algorithm);
 
 std::string calculateCRC32(char *filename);

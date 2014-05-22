@@ -21,47 +21,32 @@
 
 
 int main(int argc,char *argv[]) {
-
 	std::string selectedAlgorithm;
 	std::string filename;
-	std::string filenameCAP;
 	
 	if(argc >= 3) {
 		selectedAlgorithm = std::string(argv[1]);
 		std::transform(selectedAlgorithm.begin(), selectedAlgorithm.end(), selectedAlgorithm.begin(), ::toupper);
-		std::transform(filenameCAP.begin(), filenameCAP.end(), filenameCAP.begin(), ::toupper);
 
 		filename = std::string(argv[2]);
 	} else if(argc == 2) {
-		std::transform(filenameCAP.begin(), filenameCAP.end(), filenameCAP.begin(), ::toupper);
+		
 	}
 
 	switch(argc) {
 	case 2:
-		if(false) {
-			//CRC32 filename check and defaults for CRC32
-			break;
-		} else if(checkExtension(filenameCAP, std::string(".ISO"))) {
-			//Default file extensions for MD5
-			std::cout << calculateMD5(argv[1]) << "  " << argv[1] << std::endl;
-			break;
-		} else {
-			//Run default method if all checks fail
-			std::cout << calculateMD5(argv[1]) << "  " << argv[1] << std::endl;
-		}
+		std::cout << calculateHash(argv[1], (char *)"MD5") << "  " << argv[1] << std::endl;
 		break;
 	case 3:
-		if(selectedAlgorithm == "MD5") {
-			std::cout << calculateMD5(argv[2]) << "  " << argv[2] << std::endl;
+		if(selectedAlgorithm != "CRC32") {
+			std::cout << calculateHash(argv[2], argv[1]) << "  " << argv[2] << std::endl;
 			break;
 		} else if(selectedAlgorithm == "CRC32") {
 			std::cout << calculateCRC32(argv[2]) << "  " << argv[2] << std::endl;
 			break;
-		} else if(selectedAlgorithm == "SHA1") {
-			std::cout << calculateSHA1(argv[2]) << "  " << argv[2] << std::endl;
-			break; 
 		} else {
 			std::cout << "dsum doesn't have support for that hashing method yet!" << std::endl;
+			break;
 		}
 	default:
 		std::cout << "Usage: dsum <hashing method | default: MD5> \"filename\"" << std::endl;

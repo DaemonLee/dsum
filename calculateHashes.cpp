@@ -15,84 +15,6 @@
 */
 #include "calculateHashes.hpp"
 
-std::string calculateMD5(char *filename)
-{
-
-	//Declare some stuff we're going to need
-	unsigned char md5Buffer[MD5_DIGEST_LENGTH];
-	MD5_CTX mdContext;
-	unsigned char data[BUFFER_SIZE];
-	int bytes;
-	std::stringstream hash;
-
-	//Open a file
-	FILE *inFile = fopen (filename, "rb");
-
-	//Check if the file opened succesfully
-	if(inFile == nullptr) {
-		std::cout << filename << " can't be opened." << std::endl;
-		hash << "NULL";
-		return hash.str();
-	}
-
-	
-	//Generate the MD5 hash
-	MD5_Init (&mdContext);
-	while ((bytes = fread (data, 1, BUFFER_SIZE, inFile)) != 0) {
-		MD5_Update(&mdContext, data, bytes);
-	}
-	MD5_Final(md5Buffer,&mdContext);
-
-	//Close the file
-	fclose(inFile);
-
-	//Convert it to a readable format
-	for(int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-		hash << std::hex << std::setw(2) << std::setfill('0') << (int)md5Buffer[i];
-	}
-
-	return hash.str();
-}
-
-std::string calculateSHA1(char *filename) {
-
-	//Declare some stuff we're going to need
-	unsigned char sha1Buffer[SHA_DIGEST_LENGTH];
-	SHA_CTX mdContext;
-	unsigned char data[BUFFER_SIZE];
-	int bytes;
-	std::stringstream hash;
-
-	//Open a file
-	FILE *inFile = fopen (filename, "rb");
-
-	//Check if the file opened succesfully
-	if (inFile == nullptr) {
-		std::cout << filename << " can't be opened." << std::endl;
-		hash << "NULL";
-		return hash.str();
-	}
-
-	
-	//Generate the SHA1 hash
-	SHA1_Init(&mdContext);
-	while((bytes = fread (data, 1, BUFFER_SIZE, inFile)) != 0) {
-		SHA1_Update (&mdContext, data, bytes);
-	}
-	SHA1_Final(sha1Buffer,&mdContext);
-
-	//Close the file
-	fclose(inFile);
-
-	//Convert it to a readable format
-	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
-		hash << std::hex << std::setw(2) << std::setfill('0') << (int)sha1Buffer[i];
-	}
-
-	return hash.str();
-}
-
-
 std::string calculateCRC32(char *filename)
 {
 
@@ -123,6 +45,56 @@ std::string calculateCRC32(char *filename)
 
 	//Convert it to a readable format
 	hash << std::uppercase << std::hex << crc;
+
+	return hash.str();
+}
+
+std::string calculateHash(char *filename, char *algorithm) {
+	//Declare some stuff we're going to need
+	EVP_MD_CTX *mdctx;
+	mdctx = EVP_MD_CTX_create();
+	const EVP_MD *md;
+	unsigned char md_value[EVP_MAX_MD_SIZE];
+	unsigned int md_len, i;
+	int bytesRead;
+	std::stringstream hash;
+
+	//All the algorithms!
+	OpenSSL_add_all_algorithms();
+
+	//Get and check if the algorithm is supported
+	md = EVP_get_digestbyname(algorithm);
+	if(md == nullptr) {
+		std::cout << algorithm << " is an unknown hashing method!" << std::endl;
+		exit(1);
+	}
+
+	//Open a file
+	FILE *inFile = fopen (filename, "rb");
+
+	//Check if the file opened succesfully
+	if(inFile == nullptr) {
+		std::cout << filename << " can't be opened." << std::endl;
+		hash << "NULL";
+		exit(1);
+		//return hash.str(); //Maybe switch to exit();
+	}
+
+	//Generate the hash
+	EVP_DigestInit_ex(mdctx, md, NULL);
+	while ((bytesRead = fread (md_value, 1, EVP_MAX_MD_SIZE, inFile)) != 0) {
+		EVP_DigestUpdate(mdctx, md_value, bytesRead);
+	}
+	EVP_DigestFinal_ex(mdctx, md_value, &md_len);
+
+	//Close the file and clean up
+	EVP_MD_CTX_destroy(mdctx);
+	fclose(inFile);
+
+	//Convert it to a readable format
+	for(int i = 0; i < md_len; i++) {
+		hash  << std::hex << std::setw(2) << std::setfill('0') << (int)md_value[i];
+	}
 
 	return hash.str();
 }
