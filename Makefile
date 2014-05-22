@@ -6,7 +6,7 @@ CXX = clang++
 GCC = g++
 
 #Lovely compiler flags.
-COMPILER_FLAGS = -O3 -std=c++1y -pedantic-errors -Werror
+COMPILER_FLAGS = -O3 -std=c++1y -pedantic-errors -Werror -Wall -W
 
 #Libraries we need.
 LINKER_FLAGS = -lssl -lcrypto -lz
@@ -25,6 +25,9 @@ build: $(SRCS)
 gcc: $(SRCS)
 	echo "WARNING: UNTESTED COMPILER! USE WITH CARE!"
 	$(GCC) $(SRCS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(NAME)
+
+debug:
+	$(CXX) $(SRCS) $(COMPILER_FLAGS) -g $(LINKER_FLAGS) -o $(NAME)-debug
 
 clean:
 	rm $(NAME)

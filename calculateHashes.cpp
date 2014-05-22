@@ -55,7 +55,7 @@ std::string calculateHash(char *filename, char *algorithm) {
 	mdctx = EVP_MD_CTX_create();
 	const EVP_MD *md;
 	unsigned char md_value[EVP_MAX_MD_SIZE];
-	unsigned int md_len, i;
+	unsigned int md_len;
 	int bytesRead;
 	std::stringstream hash;
 
@@ -92,7 +92,7 @@ std::string calculateHash(char *filename, char *algorithm) {
 	fclose(inFile);
 
 	//Convert it to a readable format
-	for(int i = 0; i < md_len; i++) {
+	for(unsigned int i = 0; i < md_len; i++) {
 		hash  << std::hex << std::setw(2) << std::setfill('0') << (int)md_value[i];
 	}
 
