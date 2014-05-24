@@ -11,7 +11,7 @@ COMPILER_FLAGS = -O3 -std=c++1y -pedantic-errors -Werror -Wall -W
 #Libraries we need.
 LINKER_FLAGS = -lssl -lcrypto -lz
 
-#OBJ_NAME specifies the name of our exectuable
+#NAME is the name of the exectuable
 NAME = dsum
 
 
