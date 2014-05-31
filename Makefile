@@ -23,7 +23,7 @@ build: $(SRCS)
 
 # I (DaemonLee) don't normally test or build dsum with GCC but in theory it should work.
 gcc: $(SRCS)
-	echo "WARNING: UNTESTED COMPILER! USE WITH CARE!"
+	@echo "WARNING: UNTESTED COMPILER! USE WITH CARE!"
 	$(GCC) $(SRCS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(NAME)
 
 debug:
